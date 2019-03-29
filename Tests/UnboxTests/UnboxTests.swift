@@ -1803,9 +1803,12 @@ private enum UnboxTestEnum: Int, UnboxableEnum {
 }
 
 private struct UnboxTestDictionaryKey: UnboxableKey, Hashable {
-    var hashValue: Int { return self.key.hashValue }
-    
+
     let key: String
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.key)
+    }
     
     static func transform(unboxedKey: String) -> UnboxTestDictionaryKey? {
         if unboxedKey == "FAIL" {
